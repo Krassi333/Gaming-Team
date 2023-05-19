@@ -24,6 +24,44 @@ async function register(username, email, password) {
     return token;
 };
 
+async function login(email, password) {
+    if (email == '' || password == '') {
+        throw new Error('All fields are required!');
+    }
+    const user = await User.findOne({ email }).collation({ locale: 'en', strength: 2 });
+   // console.log('user : '+user);
+    if (!user) {
+        throw new Error('Incorrect email or password!');
+    }
+    const passChech = await bcrypt.compare(password, user.hashedPass);
+
+    if (!passChech) {
+        throw new Error('Incorrect email or password!');
+    }
+
+    const token = createSession(user);
+    return token;
+}
+
+
+function createSession({ _id, email, username }) {
+    const payload = {
+        _id,
+        email,
+        username
+    }
+
+    const token = jwt.sign(payload, secretWord);
+
+    return token;
+};
+
+function verifyToken(token) {
+    //console.log('verifytoken '+jwt.verify(token, secretWord));
+    return jwt.verify(token, secretWord);
+};
+
+
 module.exports = {
     register,
     login,

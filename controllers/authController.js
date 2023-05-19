@@ -36,4 +36,10 @@ router.post('/register',  isGuest(),async (req, res) => {
     }
 });
 
+router.get('/login', isGuest(), (req, res) => {
+    res.render('login', {
+        title: 'Login Page'
+    })
+});
+
 module.exports = router;
