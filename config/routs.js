@@ -5,6 +5,9 @@ const session = require('../midllewares/session');
 
 module.exports = (app) => {
     app.use('/', homeController);
-    app.use('/auth',session(), authController);
-    app.use('/game',session(), gameController);
+    app.use('/auth', authController);
+    app.use('/game', gameController);
+    app.use('*', (req, res) => {
+        res.render('404');
+    })
 }
