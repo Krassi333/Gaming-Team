@@ -42,4 +42,24 @@ router.get('/login', isGuest(), (req, res) => {
     })
 });
 
+router.post('/login', isGuest(), async (req, res) => {
+    const data = req.body;
+
+    try {
+        
+        const token = await login(data.email, data.password);
+        
+        res.cookie('token', token);
+        res.redirect('/');
+    } catch (err) {
+        const errors = errorParser(err);
+        console.log(errors);
+        res.render('login', {
+            title: 'Login Page',
+            errors,
+            data
+        });
+    }
+});
+
 module.exports = router;
