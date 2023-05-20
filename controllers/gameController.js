@@ -13,4 +13,31 @@ router.get('/create', hasUser(), (req, res) => {
     })
 });
 
+router.post('/create', hasUser(), async (req, res) => {
+    const game = {
+        name: req.body.name,
+        image: req.body.image,
+        price: Number(req.body.price),
+        description: req.body.description,
+        genre: req.body.genre,
+        platform: req.body.platform,
+        owner: req.user._id
+    }
+
+    try {
+        await create(game);
+        res.redirect('/game/catalog');
+    } catch (err) {
+        const errors = errorParser(err);
+        const user = req.cookies.token;
+
+        res.render('create', {
+            title: "Create Page",
+            user,
+            errors
+        })
+    }
+});
+
+
 module.exports = router;
