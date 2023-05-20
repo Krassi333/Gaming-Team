@@ -76,4 +76,14 @@ router.get('/:id/details', async (req, res) => {
     })
 });
 
+router.get('/:id/delete', hasUser(), async (req, res) => {
+    const game = await findById(req.params.id);
+
+    if (!req.user || req.user._id.toString() != game.owner.toString()) {
+        res.redirect('/auth/login');
+        return;
+    }
+    await deleteGame(req.params.id);
+    res.redirect('/game/catalog');
+});
 module.exports = router;
