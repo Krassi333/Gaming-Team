@@ -86,4 +86,18 @@ router.get('/:id/delete', hasUser(), async (req, res) => {
     await deleteGame(req.params.id);
     res.redirect('/game/catalog');
 });
+
+router.get('/:id/edit', hasUser(), async (req, res) => {
+    const game = await findById(req.params.id);
+
+    if (!req.user || req.user._id.toString() != game.owner.toString()) {
+        res.redirect('/auth/login');
+        return;
+    }
+
+    res.render('edit', {
+        title: "Edit Page",
+        game
+    })
+});
 module.exports = router;
