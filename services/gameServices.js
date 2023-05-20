@@ -8,6 +8,10 @@ async function create(game) {
     return Game.create(game);
 }
 
+async function findById(id) {
+    return Game.findById(id).lean();
+}
+
 module.exports = {
     getAllGames,
     create,
