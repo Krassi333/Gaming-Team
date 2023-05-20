@@ -3,7 +3,7 @@ const databaseConfig = require('./config/database');
 const expressConfig = require('./config/express');
 const routsConfig = require('./config/routs');
 
-const port = 3000;
+const port = 5000;
 
 
 async function start() {
