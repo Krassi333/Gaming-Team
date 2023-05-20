@@ -50,4 +50,30 @@ router.get('/catalog', async (req, res) => {
     });
 });
 
+router.get('/:id/details', async (req, res) => {
+    const game = await findById(req.params.id);
+    const user = req.cookies.token;
+
+    if (req.user) {
+        if (req.user._id.toString() == game.owner.toString()) {
+            game.isOwner = true;
+        }
+
+        if (game.bouthBy.map(x => x.toString()).includes(req.user._id.toString())) {
+            game.alreadyBuyd = true;
+        } else {
+            game.canBuy = true;
+        }
+    }
+
+    //console.log(game.alreadyBuyd);
+   // console.log(game.canBuy);
+
+    res.render('details', {
+        title: 'Details Page',
+        game,
+        user
+    })
+});
+
 module.exports = router;
