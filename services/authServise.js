@@ -8,7 +8,7 @@ async function register(username, email, password) {
 
     const existingUsername = await User.findOne({ username }).collation({ locale: 'en', strength: 2 });
     const existingEmail = await User.findOne({ email }).collation({ locale: "en", strength: 2 });
-
+//console.log(existingEmail);
     if (existingUsername) {
         throw new Error('Username is taken !');
     } else if (existingEmail) {
