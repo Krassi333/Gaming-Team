@@ -100,4 +100,24 @@ router.get('/:id/edit', hasUser(), async (req, res) => {
         game
     })
 });
+
+router.post('/:id/edit', hasUser(), async (req, res) => {
+    const game = await findById(req.params.id);
+
+
+    try {
+        await edit(req.params.id, req.body);
+        res.redirect('/game/catalog');
+    } catch (err) {
+        const errors = errorParser(err);
+
+        res.render('edit', {
+            title: "Edit Page",
+            game,
+            errors
+        })
+    }
+
+});
+
 module.exports = router;
