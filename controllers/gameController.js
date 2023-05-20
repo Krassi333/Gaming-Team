@@ -133,4 +133,24 @@ router.get('/:id/buy', hasUser(), async (req, res) => {
     }
 });
 
+router.get('/search', hasUser(), async (req, res) => {
+    const games = await getAllGames();
+    res.render('search', {
+        title: 'Search Page',
+        games
+    })
+});
+
+router.post('/search', hasUser(), async (req, res) => {
+    const games = await searchRezults(req.body.name, req.body.platform);
+
+    res.render('search', {
+        title: 'Search Page',
+        games,
+        searchName: req.body.name,
+        searchPLatform: req.body.platform
+    })
+})
+
+
 module.exports = router;

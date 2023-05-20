@@ -36,6 +36,15 @@ async function addBuyer(gameId, userId) {
     return game.save();
 }
 
+async function searchRezults(searchName, searchPlatform) {
+    if (!searchName && !searchPlatform) {
+        return await Game.find({}).lean();
+    } else {
+        return await Game.find({ name: searchName, platform: searchPlatform }).collation({ locale: 'en', strength: 2 }).lean();
+    }
+
+}
+
 module.exports = {
     getAllGames,
     create,
