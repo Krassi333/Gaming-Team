@@ -120,4 +120,17 @@ router.post('/:id/edit', hasUser(), async (req, res) => {
 
 });
 
+router.get('/:id/buy', hasUser(), async (req, res) => {
+
+    try {
+
+        await addBuyer(req.params.id, req.user._id);
+        res.redirect(`/game/${req.params.id}/details`);
+
+    } catch (err) {
+        const errors = errorParser(err);
+        console.log(errors);
+    }
+});
+
 module.exports = router;

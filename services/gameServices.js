@@ -29,6 +29,13 @@ async function edit(id, data) {
     return game.save();
 }
 
+async function addBuyer(gameId, userId) {
+    const game = await Game.findById(gameId);
+    game.bouthBy.push(userId.toString());
+    console.log(game.bouthBy);
+    return game.save();
+}
+
 module.exports = {
     getAllGames,
     create,
