@@ -1,0 +1,28 @@
+<main id="search">
+    <section class="game-search">
+        <h1>Search</h1>
+
+        <form class="search-form" action="/game/search" method="post">
+            <input type="text" class="search-game" name="name" placeholder="Search here..." value="{{searchName}}">
+            <select id="platform" name="platform" value="searchPlatform">
+                <option value="">-------</option>
+                <option value="PC">PC</option>
+                <option value="Nintendo">Nintendo</option>
+                <option value="PS4">PS4</option>
+                <option value="PS5">PS5</option>
+                <option value="XBOX">XBOX</option>
+            </select>
+            <button type="submit" class="btn-search">Search</button>
+        </form>
+
+        {{#if games}}
+        {{#each games}}
+        {{> search}}
+        {{/each}}
+        {{else}}
+        <div class="no-match">
+            <p>No match was found!</p>
+        </div>
+        {{/if}}
+    </section>
+</main>
