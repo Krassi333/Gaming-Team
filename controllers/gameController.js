@@ -40,4 +40,14 @@ router.post('/create', hasUser(), async (req, res) => {
 });
 
 
+router.get('/catalog', async (req, res) => {
+    const games = await getAllGames();
+
+
+    res.render('catalog', {
+        title: 'Catalog Page',
+        games
+    });
+});
+
 module.exports = router;
